@@ -28,13 +28,40 @@ class RecommendationService
         // similar users and recommend products that they have purchased
 
 
-        $similarUsers = User::where('id', '!=', $user->id)
-            ->whereHas('orders', function ($query) use ($purchasedProducts) {
-                $query->whereHas('products', function ($query) use ($purchasedProducts) {
-                    $query->whereIn('product_id', $purchasedProducts->pluck('id'));
-                });
-            })
-            ->get();
+        // $similarUsers = User::where('id', '!=', $user->id)
+        //     ->whereHas('orders', function ($query) use ($purchasedProducts) {
+        //         $query->whereHas('products', function ($query) use ($purchasedProducts) {
+        //             $query->whereIn('product_id', $purchasedProducts->pluck('id'));
+        //         });
+        //     })
+        //     ->get();
+        $recommendedProductsBatch = collect();
+
+
+        $batchSize = 50; // Number of product IDs per batch
+        $productIds = $purchasedProducts->pluck('id')->toArray();
+        $totalProductIds = count($productIds);
+        $recommendedProducts = collect();
+
+        for ($i = 0; $i < $totalProductIds; $i += $batchSize) {
+            $productIdsBatch = array_slice($productIds, $i, $batchSize);
+
+            $similarUsers = User::where('id', '!=', $user->id)
+                ->whereHas('orders', function ($query) use ($productIdsBatch) {
+                    $query->whereHas('products', function ($query) use ($productIdsBatch) {
+                        $query->whereIn('product_id', $productIdsBatch);
+                    });
+                })
+                ->get();
+
+            // Rest of the code to process similar users and recommended products
+
+            // Merge recommended products from each batch
+            $recommendedProducts = $recommendedProducts->merge($recommendedProductsBatch);
+        }
+
+
+
 
         $recommendedProducts = collect();
 

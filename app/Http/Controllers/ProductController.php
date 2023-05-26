@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use App\Rules\UserOwnsProduct;
+use App\Services\RecommendationService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,15 @@ class ProductController extends Controller
 
     public function index()
     {
-        return auth()->user()->name;
+        ini_set("max_execution_time", "-1");
+        ini_set("max_file_uploads", "200M");
+        ini_set("max_input_time", "1000000000000");
+        ini_set("memory_limit", "1000000000000M");
+        ini_set('post_max_size', '5000000000000M');
+        ini_set('upload_max_filesize', '50000000000000M');
+        $recommendationservice = new RecommendationService;
+        $x = $recommendationservice->getRecommendedProducts(auth()->user()->id);
+        return response()->json($x);
     }
 
     /**
