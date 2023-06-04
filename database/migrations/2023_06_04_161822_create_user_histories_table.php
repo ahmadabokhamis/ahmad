@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('brands', function (Blueprint $table) {
+        Schema::create('user_histories', function (Blueprint $table) {
             $table->id();
-            $table->string('name',255);
-            $table->tinyText('image');
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('event',20);
+            $table->string('ipaddress',30);
+            $table->text('device_information');
+            $table->text('changes');
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('user_histories');
     }
 };

@@ -22,9 +22,10 @@ return new class extends Migration
             $table->string('name',100);
             $table->string('description',100);
             $table->double('price');
-            $table->integer('quantity');
-            $table->string('table',10);
-            $table->integer('table_id');
+            $table->double('weight');
+            $table->text('dimensions');
+            $table->integer('company_id');
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
 
         });
