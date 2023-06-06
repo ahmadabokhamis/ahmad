@@ -46,32 +46,31 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
+    public function searchs()
+    {
+        return $this->hasMany(SearchHistory::class, 'user_id', 'id');
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(UserHistory::class, 'user_id', 'id');
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class, 'user_id', 'id');
     }
 
-    /**
-     * Get all of the comments for the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function products()
     {
         return $this->hasMany(Product::class, 'table_id', 'id')->where('table','User');
     }
-
 
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
 
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
     public function getJWTCustomClaims()
     {
         return [];

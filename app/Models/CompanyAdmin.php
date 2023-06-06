@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyAdmin extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'company_id',
+        'name',
+        'email',
+        'password',
+        'address',
+        'phone'
+    ];
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
 }
