@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product_Order extends Model
+class ProductOrder extends Model
 {
 
     /**
@@ -14,16 +14,28 @@ class Product_Order extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
 
-    protected $fillable= ['product_id','order_id','price','quantity','rate'];
+    protected $fillable= ['pro_var_id','order_id','price','quantity'];
 
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
+    public function produc_variations()
+    {
+        return $this->belongsTo(ProductVariation::class, 'pro_var_id', 'id');
+    }
+
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
+        return $this->hasOneThrough(
+            Product::class,
+            ProductVariation::class,
+            'order_id',
+            'pro_var_id',
+            'id',
+            'id'
+        );
     }
 
     use HasFactory;

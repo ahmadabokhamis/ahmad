@@ -5,19 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class UserHistory extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'user_id','event','ipaddress','changes','device_information'
     ];
 
-    public function orders()
+    public function user()
     {
-        return $this->hasMany(Order::class, 'order_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-
-
 }

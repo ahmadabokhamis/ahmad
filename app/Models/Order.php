@@ -9,14 +9,10 @@ class Order extends Model
 {
 
     protected $fillable = ['user_id','payment_id','total','status'];
-    /**
-     * Get all of the comments for the Order
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+
     public function product_order()
     {
-        return $this->belongsToMany(Product::class, 'product__orders', 'order_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'product_orders', 'order_id', 'product_id');
     }
 
     public function products()
@@ -27,6 +23,16 @@ class Order extends Model
     public function payment()
     {
         return $this->belongsTo(Payment::class, 'payment_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(OrderHistory::class, 'order_id', 'id');
     }
 
     use HasFactory;

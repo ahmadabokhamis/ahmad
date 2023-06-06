@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('company_admins', function (Blueprint $table) {
             $table->id();
-            $table->string('name',50);
-            $table->string('description',150);
-            $table->integer('parent_id');
-            $table->foreign('parent_id')->references('id')->on('categories');
-            $table->boolean('last_layar');
+            $table->integer('company_id');
+            $table->foreign('company_id')->references('id')->on('companies');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->text('password');
+            $table->string('address',100);
+            $table->string('phone',30);
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('company_admins');
     }
 };

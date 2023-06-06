@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-
-        Schema::create('products', function (Blueprint $table) {
-
+        Schema::create('product_histories', function (Blueprint $table) {
             $table->id();
+            $table->integer('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->integer('admin_id');
+            $table->foreign('admin_id')->references('id')->on('company_admins');
             $table->integer('brand_id');
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->string('name',100);
@@ -24,14 +26,9 @@ return new class extends Migration
             $table->double('price');
             $table->double('weight');
             $table->text('dimensions');
-            $table->integer('company_id');
-            $table->foreign('company_id')->references('id')->on('companies');
+            $table->string('event',20);
             $table->timestamps();
-
         });
-
-
-
     }
 
     /**
@@ -41,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('product_histories');
     }
 };

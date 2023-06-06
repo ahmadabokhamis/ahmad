@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
 
-    protected $fillable= ['name','description','price','quantity','table','table_id'];
+    protected $fillable= ['name','description','price','company_id','brand_id','weight','dimensions'];
+
+
+    public function reviews()
+    {
+        return $this->hasMany(ProductReview::class, 'product_id', 'id');
+    }
 
     public function product_order()
     {
@@ -25,15 +31,29 @@ class Product extends Model
         return $this->belongsToMany(Category::class, 'product_category', 'product_id', 'category_id');
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
 
-    /**
-     * Get the user that owns the Product
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
+    }
+
+    public function product_variations()
+    {
+        return $this->hasMany(ProductVariation::class, 'product_id', 'id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id', 'id');
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(ProductHistory::class, 'product_id', 'id');
     }
 
 }
