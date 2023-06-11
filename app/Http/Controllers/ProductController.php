@@ -22,6 +22,11 @@ class ProductController extends Controller
         return response()->json($request);
     }
 
+    public function addProductPage()
+    {
+        return view('dashboard.products.add_product');
+    }
+
     public function index()
     {
         ini_set("max_execution_time", "-1");

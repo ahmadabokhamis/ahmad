@@ -31,7 +31,7 @@
                       <div class="col-3" style="align-self: center ;text-align: end">
                            <a href="" type="submit" class="btn btn-icon btn-outline-secondary ">  <i class="fa-solid fa-arrows-rotate"></i></a>
 
-                           <a href="" type="submit" class=" btn btn-icon btn-primary">  <i class="fa-solid fa-plus"></i></a>
+                           <a href="{{ route('admin.companies.add') }}" type="submit" class=" btn btn-icon btn-primary">  <i class="fa-solid fa-plus"></i></a>
 
 
 

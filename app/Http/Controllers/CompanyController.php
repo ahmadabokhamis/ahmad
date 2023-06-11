@@ -16,6 +16,10 @@ class CompanyController extends Controller
     {
         //
     }
+    public function addCompanyPage()
+    {
+        return view('dashboard.companies.add_company');
+    }
 
     /**
      * Show the form for creating a new resource.

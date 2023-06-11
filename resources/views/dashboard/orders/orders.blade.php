@@ -30,7 +30,7 @@
       </div>
       <div class="col-2" style="align-self: center ;text-align: end">
          <a href="" type="submit" class="btn btn-icon btn-outline-secondary ">  <i class="fa-solid fa-arrows-rotate"></i></a>
-         <a href="" type="submit" class="btn btn-primary btn-icon"><i class="fa-solid fa-plus"></i></a>
+         <a href="{{ route('admin.orders.add') }}" type="submit" class="btn btn-primary btn-icon"><i class="fa-solid fa-plus"></i></a>
          <button   class="btn btn-danger btn-icon "  id="btn_delete_all" data-bs-toggle="modal"
             data-bs-target="#smallModal" >    <i   class="bx bx-trash-alt" style="color:white"></i></button>
       </div>
@@ -107,9 +107,10 @@
                   <th>
                   </th>
                   <th>ID</th>
-                 
+                  <th>customer name</th>
                   <th>Status</th>
                   <th>Quantity</th>
+                  <th>products number</th>
                   <th>Total</th>
                   <th>Action</th>
                </tr>

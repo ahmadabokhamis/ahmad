@@ -14,8 +14,17 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        
     }
+
+
+    public function addCategoryPage()
+    {
+        return view('dashboard.categories.add_category');
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.

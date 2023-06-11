@@ -17,7 +17,10 @@ class OrderController extends Controller
     {
         //
     }
-
+    public function addOrderPage()
+    {
+        return view('dashboard.orders.add_order');
+    }
     /**
      * Show the form for creating a new resource.
      *
