@@ -46,6 +46,49 @@ class AuthController extends Controller
     }
 
 
+    public function loginCompanyAdmin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+        $token = Auth::guard('company')->attempt($credentials);
+
+        if (!$token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+
+        $user = Auth::guard('company')->user();
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+
+    }
+
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('web')->attempt($credentials)) {
+            // Authentication was successful for admin guard
+            return redirect()->intended('/admin/dashboard');
+        }
+
+        return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
+    }
+
+
 
     public function register(RegisterRequest $request){
 
@@ -75,6 +118,21 @@ class AuthController extends Controller
             'status' => 'success',
             'message' => 'Successfully logged out',
         ]);
+    }
+
+    public function logoutCompanyAdmin()
+    {
+        Auth::guard('company')->logout();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully logged out',
+        ]);
+    }
+
+    public function adminLogout()
+    {
+        Auth::guard('web')->logout();
+        return redirect('/login');
     }
 
     public function refresh()

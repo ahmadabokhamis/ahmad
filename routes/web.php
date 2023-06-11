@@ -22,7 +22,13 @@ use App\Http\Controllers\AdvertisementController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware('auth.admin')->get('/home', function () {
+    return 5;
+});
 
+
+require __DIR__.'/admin.php';
+require __DIR__.'/company.php';
 
 
 Route::name('admin.')->group(function () {
