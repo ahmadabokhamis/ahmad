@@ -47,7 +47,7 @@
       </div>
       <div class="col-2" style="align-self: center ;text-align: end">
 
-         <a href="" type="submit" class="btn btn-primary btn-icon"><i class="fa-solid fa-plus"></i></a>
+         <a href="{{ route('admin.roles.create') }}" type="submit" class="btn btn-primary btn-icon"><i class="fa-solid fa-plus"></i></a>
 
       </div>
    </div>

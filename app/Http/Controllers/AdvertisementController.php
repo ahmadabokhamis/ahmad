@@ -22,6 +22,10 @@ class AdvertisementController extends Controller
     {
         return view('dashboard.advertisement.add_advertisement');
     }
+    public function editAdvertisementPage()
+    {
+        return view('dashboard.advertisement.edit_advertisement');
+    }
 
 
 

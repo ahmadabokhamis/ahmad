@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('phone',25);
             $table->string('country',40);
             $table->string('region',40);
+            $table->string('status',40);
             $table->text('product_description');
             $table->date('establishment_date');
             $table->timestamps();

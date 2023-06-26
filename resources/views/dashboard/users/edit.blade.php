@@ -48,7 +48,7 @@
 
 
                   {!! Form::model($user, ['method' => 'PATCH','route' => ['admin.users.update', $user->id]]) !!}
-                      
+
                             <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="location">first name</label>
                                     <div class="col-sm-10">
@@ -64,7 +64,7 @@
                                         <span class="text-danger error-text last_name_error"></span>
                                     </div>
                                 </div>
-                                
+
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="basic-default-name">user Name</label>
                                 <div class="col-sm-10">

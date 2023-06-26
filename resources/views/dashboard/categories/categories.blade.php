@@ -52,7 +52,7 @@
 
             </div>
             <div class="table-responsive text-nowrap">
-                <table class="table table-hover" id="CustomersTable">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>
@@ -65,7 +65,30 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                        @isset($categories)
+                        @foreach ($categories as $category)
+                            <tr>
+                               <td><input type="checkbox" value="{{$category->id}}" class="box1"  ></td>
 
+                                <td>{{ $category->id }}</td>
+                                <td>{{ $category->name }}</td>
+                                <td>{{ $category->description }}</td>
+                                <td>
+                                    @isset($category->parent->name)
+                                    {{ $category->parent->name }}
+                                    @endisset</td>
+
+                                <td>
+                                    <a type="button" class="btn btn-icon btn-outline-success"
+                                        href="{{ route('admin.categories.edit',$category->id) }}">
+                                        <i class="bx bx-edit-alt"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                            @endforeach
+                            @endisset
                     </tbody>
 
                 </table>

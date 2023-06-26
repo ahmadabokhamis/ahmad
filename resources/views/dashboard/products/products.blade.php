@@ -179,7 +179,6 @@
                             <th>name</th>
                             <th>description</th>
                             <th>price</th>
-
                             <th>action</th>
                         </tr>
                     </thead>

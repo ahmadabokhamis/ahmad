@@ -55,7 +55,7 @@
 
 
 
-                               
+
 
 
 
@@ -80,7 +80,7 @@
                 $.ajax({
                     type: "post",
                     enctype: "multipart/form-data",
-
+                    url: "{{ url('/admin/orders/store') }}",
                     data: formData,
                     processData: false,
                     contentType: false,

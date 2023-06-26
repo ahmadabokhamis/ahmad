@@ -14,7 +14,7 @@ class CompanyAdmin extends Model implements AuthenticatableContract
 
     protected $fillable = [
         'company_id',
-        'name',
+        'user_name',
         'email',
         'password',
         'address',

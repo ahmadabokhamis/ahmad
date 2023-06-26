@@ -1,4 +1,5 @@
-@extends('Dashboard.layouts.master') @section("content")
+@extends('Dashboard.layouts.master')
+@section("content")
 
 <!-- Content wrapper -->
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -105,7 +106,7 @@
                 $.ajax({
                     type: "post",
                     enctype: "multipart/form-data",
-
+                    url: "{{ url('/admin/orders/update') }}",
                     data: formData,
                     processData: false,
                     contentType: false,
