@@ -3,7 +3,8 @@
         <a href="" class="app-brand-link">
             <span class="app-brand-logo demo">
 
-           <i class="fa-solid fa-dove" style="color: #4277c7;"></i>
+           {{-- <i class="fa-solid fa-dove" style="color: #4277c7;"></i> --}}
+           <i class="fa-solid fa-cart-shopping fa-2xl" style="color: #4277c7;"></i>
             </span>
             <span class="app-brand-text demo menu-text fw-bolder ms-2">Moma</span>
         </a>
@@ -132,6 +133,25 @@
 
             </ul>
         </li>
+        <li class="menu-item
+
+        {{ request()->route()->named('admin.advertisement')? 'active open': '' }}
+
+
+        ">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-box"></i>
+                <div data-i18n="User interface">advertisement</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ request()->route()->named('admin.advertisement')? 'active': '' }}">
+                    <a href="{{ route('admin.advertisement') }}" class="menu-link">
+                        <div data-i18n="Accordion">advertisement</div>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
 
 
         <li class="menu-item
@@ -160,8 +180,8 @@
         </li>
         <li class="menu-item
 
-
-
+        {{ request()->route()->named('admin.users.index')? 'active open': '' }}
+        {{ request()->route()->named('admin.roles.index')? 'active open': '' }}
 
 
 
@@ -172,15 +192,15 @@
                 <div data-i18n="User interface">System</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item ">
-                    <a href="{{ route('admin.users') }}" class="menu-link">
+                <li class="menu-item {{ request()->route()->named('admin.users.index')? 'active ': '' }}">
+                    <a href="{{ route('admin.users.index') }}" class="menu-link">
                         <div data-i18n="Accordion">Users</div>
                     </a>
                 </li>
                 <li class="menu-item
-
+                {{ request()->route()->named('admin.roles.index')? 'active ': '' }}
                 ">
-                    <a href="{{ route('admin.roles') }}" class="menu-link">
+                    <a href="{{ route('admin.roles.index') }}" class="menu-link">
                         <div data-i18n="Accordion">User Permission</div>
                     </a>
                 </li>
@@ -189,7 +209,7 @@
         </li>
         <li class="menu-item">
             <div class="menu-link ">
-                <a href="" class="btn btn-sm btn-outline-danger" style="margin: auto"><i
+                <a href="{{ route('admin.logout') }}" class="btn btn-sm btn-outline-danger" style="margin: auto"><i
                         class="bx bx-log-out-circle"></i> logout</a>
             </div>
         </li>

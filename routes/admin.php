@@ -1,57 +1,129 @@
 <?php
 
-use App\Http\Controllers\Auth\admin\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\admin\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\admin\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\admin\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\admin\NewPasswordController;
-use App\Http\Controllers\Auth\admin\PasswordController;
-use App\Http\Controllers\Auth\admin\PasswordResetLinkController;
-use App\Http\Controllers\Auth\admin\RegisteredUserController;
-use App\Http\Controllers\Auth\admin\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
-Route::prefix('admin')->middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])->name('admin.register');
+use Illuminate\Http\Request;
 
-    Route::post('register', [RegisteredUserController::class, 'store'])->name('admin.register.store');
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-                ->name('admin.login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+Route::prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::middleware('isAdmin')->group(function () {
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
-                ->name('admin.password.request');
+            Route::get('/', function () {
+                return view('dashboard.index');
+            });
 
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
-                ->name('admin.password.email');
+            Route::get('/index', function () {
+                return view('dashboard.index');
+            })->name('index');
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-                ->name('admin.password.reset');
 
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
-                ->name('admin.password.store');
-});
 
-Route::prefix('admin')->middleware('auth.admin')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)
-                ->name('admin.verification.notice');
 
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-                ->middleware(['signed', 'throttle:6,1'])
-                ->name('admin.verification.verify');
 
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-                ->middleware('throttle:6,1')
-                ->name('admin.verification.send');
 
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('admin.password.confirm');
+            /* products   */
 
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+            Route::get('/products',[ProductController::class,'index'])->name('products');
+            Route::get('/products/add', [ProductController::class,'addProductPage'])->name('products.add');
+            Route::post('/products/store', [ProductController::class,'store'])->name('products.store');
+            Route::get('/products/edit/{id}', [ProductController::class,'editProductPage'])->name('products.edit');
+            Route::post('/products/update', [ProductController::class,'update'])->name('products.update');
 
-    Route::put('password', [PasswordController::class, 'update'])->name('admin.password.update');
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
-});
 
+
+            /* customers   */
+            Route::get('/customers',[CustomerController::class,'index'])->name('customers');
+            Route::get('/customers/add', [CustomerController::class,'addCustomerPage'])->name('customers.add');
+            Route::post('/customers/store', [CustomerController::class,'store'])->name('customers.store');
+            Route::get('/customers/edit/{id}', [CustomerController::class,'editCustomerPage'])->name('customers.edit');
+            Route::post('/customers/update', [CustomerController::class,'update'])->name('customers.update');
+
+
+
+
+            /* orders   */
+
+            Route::get('/orders',[OrderController::class,'index'])->name('orders');
+            Route::get('/orders/add', [OrderController::class,'addOrderPage'])->name('orders.add');
+            Route::post('/orders/store', [OrderController::class,'store'])->name('orders.store');
+            Route::get('/orders/edit/{id}', [OrderController::class,'editOrderPage'])->name('orders.edit');
+            Route::post('/orders/update', [OrderController::class,'update'])->name('orders.update');
+
+
+
+
+
+            /* categories   */
+
+            Route::get('/categories',[CategoryController::class,'index'])->name('categories');
+            Route::get('/categories/add', [CategoryController::class,'addCategoryPage'])->name('categories.add');
+            Route::post('/categories/store', [CategoryController::class,'store'])->name('categories.store');
+            Route::get('/categories/edit/{id}', [CategoryController::class,'editCategoryPage'])->name('categories.edit');
+            Route::post('/categories/update', [CategoryController::class,'update']);
+
+
+
+
+
+
+
+            /* companies   */
+
+            Route::get('/companies',  [CompanyController::class,'index'])->name('companies');
+            Route::get('/companies/add', [CompanyController::class,'addCompanyPage'])->name('companies.add');
+            Route::post('/companies/store', [CompanyController::class,'store'])->name('companies.store');
+            Route::get('/companies/edit/{id}', [CompanyController::class,'editCompanyPage'])->name('companies.edit');
+            Route::post('/companies/update', [CompanyController::class,'update'])->name('companies.update');
+
+
+
+            /* advertisement   */
+
+            Route::get('/advertisement', function () {
+                return view('dashboard.advertisement.advertisement');
+            })->name('advertisement');
+
+            Route::get('/advertisement/add', [AdvertisementController::class,'addAdvertisementPage'])->name('advertisement.add');
+            Route::post('/advertisement/store', [AdvertisementController::class,'store'])->name('advertisement.store');
+            Route::get('/advertisement/edit/{id}', [AdvertisementController::class,'editAdvertisementPage'])->name('advertisement.edit');
+            Route::post('/advertisement/update', [AdvertisementController::class,'update'])->name('advertisement.update');
+
+
+
+
+
+
+
+
+
+            Route::resource('users', UserController::class);
+            Route::resource('roles', RoleController::class);
+
+
+
+
+
+
+            // Route::get('/users', function () {
+            //     return view('dashboard.users.index');
+            // })->name('users');
+
+            // Route::get('/roles', function () {
+            //     return view('dashboard.roles.index');
+            // })->name('roles');
+        });
+
+        require __DIR__ . '/admin_auth.php';
+    });

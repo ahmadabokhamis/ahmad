@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->string('name');
+            $table->string('user_name');
             $table->string('email')->unique();
             $table->text('password');
             $table->string('address',100);

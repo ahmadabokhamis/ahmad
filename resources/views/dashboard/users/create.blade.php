@@ -70,7 +70,7 @@
                                         <span class="text-danger error-text last_name_error"></span>
                                     </div>
                                 </div>
-                                
+
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="basic-default-name">user Name</label>
                                 <div class="col-sm-10">
@@ -84,6 +84,22 @@
                                 <div class="col-sm-10">
                                     <div class="input-group input-group-merge">
                                         <input type="text"  name="email" class="form-control" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="basic-default-email">phone</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group input-group-merge">
+                                        <input type="text"  name="phone" class="form-control" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="basic-default-email">address</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group input-group-merge">
+                                        <input type="text"  name="address" class="form-control" value="" />
                                     </div>
                                 </div>
                             </div>

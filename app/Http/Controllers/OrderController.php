@@ -13,11 +13,15 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
-        //
+        return view('dashboard.orders.orders');
     }
-
+    public function addOrderPage()
+    {
+        return view('dashboard.orders.add_order');
+    }
     /**
      * Show the form for creating a new resource.
      *

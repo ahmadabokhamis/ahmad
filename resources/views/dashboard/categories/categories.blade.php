@@ -20,7 +20,7 @@
                         <a href="javascript:void(0);">Home</a>
                       </li>
                       <li class="breadcrumb-item">
-                        <a href="javascript:void(0);">Customer</a>
+                        <a href="javascript:void(0);">catalog</a>
                       </li>
                       <li class="breadcrumb-item active">categories</li>
                     </ol>
@@ -31,7 +31,7 @@
                       <div class="col-3" style="align-self: center ;text-align: end">
                            <a href="" type="submit" class="btn btn-icon btn-outline-secondary ">  <i class="fa-solid fa-arrows-rotate"></i></a>
 
-                           <a href="" type="submit" class=" btn btn-icon btn-primary">  <i class="fa-solid fa-plus"></i></a>
+                           <a href="{{ route('admin.categories.add') }}" type="submit" class=" btn btn-icon btn-primary">  <i class="fa-solid fa-plus"></i></a>
 
 
 
@@ -40,32 +40,6 @@
                           data-bs-target="#smallModal" >    <i   class="bx bx-trash-alt" style="color:white"></i></button>
                       </div>
                      </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <div class="card ">
 
@@ -78,22 +52,43 @@
 
             </div>
             <div class="table-responsive text-nowrap">
-                <table class="table table-hover" id="CustomersTable">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>
                             </th>
                             <th>id</th>
                             <th>name</th>
-                            <th>phone number</th>
-                            <th>address</th>
-                            <th>status</th>
-
+                            <th>description</th>
+                            <th>parent category</th>
                             <th>action</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                        @isset($categories)
+                        @foreach ($categories as $category)
+                            <tr>
+                               <td><input type="checkbox" value="{{$category->id}}" class="box1"  ></td>
 
+                                <td>{{ $category->id }}</td>
+                                <td>{{ $category->name }}</td>
+                                <td>{{ $category->description }}</td>
+                                <td>
+                                    @isset($category->parent->name)
+                                    {{ $category->parent->name }}
+                                    @endisset</td>
+
+                                <td>
+                                    <a type="button" class="btn btn-icon btn-outline-success"
+                                        href="{{ route('admin.categories.edit',$category->id) }}">
+                                        <i class="bx bx-edit-alt"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                            @endforeach
+                            @endisset
                     </tbody>
 
                 </table>

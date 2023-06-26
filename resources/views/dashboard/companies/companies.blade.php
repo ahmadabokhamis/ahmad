@@ -31,7 +31,7 @@
                       <div class="col-3" style="align-self: center ;text-align: end">
                            <a href="" type="submit" class="btn btn-icon btn-outline-secondary ">  <i class="fa-solid fa-arrows-rotate"></i></a>
 
-                           <a href="" type="submit" class=" btn btn-icon btn-primary">  <i class="fa-solid fa-plus"></i></a>
+                           <a href="{{ route('admin.companies.add') }}" type="submit" class=" btn btn-icon btn-primary">  <i class="fa-solid fa-plus"></i></a>
 
 
 
@@ -74,15 +74,39 @@
                             </th>
                             <th>id</th>
                             <th>name</th>
-                            <th>phone number</th>
+                            <th>description</th>
+                            <th>product description</th>
                             <th>address</th>
-                            <th>status</th>
+
+
+
 
                             <th>action</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                        @isset($companies)
+                        @foreach ($companies as $company)
+                            <tr>
+                               <td><input type="checkbox" value="{{$company->id}}" class="box1"  ></td>
 
+                                <td>{{ $company->id }}</td>
+                                <td>{{ $company->name }}</td>
+                                <td>{{ $company->desciption }}</td>
+                                <td>{{ $company->product_description }}</td>
+                                <td>{{ $company->address }}</td>
+
+                                <td>
+                                    <a type="button" class="btn btn-icon btn-outline-success"
+                                        href="{{ route('admin.companies.edit',$company->id) }}">
+                                        <i class="bx bx-edit-alt"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                            @endforeach
+                            @endisset
                     </tbody>
 
                 </table>

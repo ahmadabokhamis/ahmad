@@ -43,7 +43,7 @@
 
 
 
-                           <a href=""  class=" btn btn-icon btn-primary">  <i class="fa-solid fa-plus"></i></a>
+                           <a href="{{ route('admin.users.create') }}"  class=" btn btn-icon btn-primary">  <i class="fa-solid fa-plus"></i></a>
 
 
 
@@ -84,12 +84,14 @@
 
             </div>
             <div class="table-responsive text-nowrap">
-                <table id="table" class="table table-hover" >
+                <table id="" class="table table-hover" >
                     <thead>
                         <tr>
-                            <th><input type="checkbox" name="select_all" id=""  onclick="CheckAll('box1',this)"></th>
+                            <th>
+                                {{-- <input type="checkbox" name="select_all" id=""  onclick="CheckAll('box1',this)"> --}}
+                            </th>
                             <th>user name</th>
-                            <th>group</th>
+                            <th>email</th>
                             <th>status</th>
                             <th>User type</th>
                             <!--<th>Date Upated</th>-->
@@ -144,7 +146,7 @@
 
 
 
-                                <td>  <a href="" class="btn btn-icon btn-outline-success"
+                                <td>  <a href="{{ route('admin.users.edit',$user->id) }}" class="btn btn-icon btn-outline-success"
                                     >
                                     <i class="bx bx-edit-alt"></i>
                                 </a>

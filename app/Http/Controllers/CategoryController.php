@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class CategoryController extends Controller
 {
@@ -14,8 +16,39 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories =Category::get();
+
+        return view('dashboard.categories.categories',compact('categories'));
     }
+
+
+    public function addCategoryPage()
+    {
+        return view('dashboard.categories.add_category');
+    }
+
+
+    public function editCategoryPage($id)
+    {
+        $category =Category::find($id)->first();
+        $categories =Category::get();
+
+        return view('dashboard.categories.edit_category',compact('category','categories'));
+    }
+
+
+
+
+
+
+
+    public function CompanyAddCategoryPage()
+    {
+        return view('company.categories.add_category');
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -27,59 +60,97 @@ class CategoryController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required',
+            'description' =>  'required'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => 0,
+                'errors' => $validator->getMessageBag()->toArray()
+
+            ]);
+        }
+
+
+
+        $new_category = Category::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'parent_id' => $request->has('parent_id') ? $request->parent_id : null,
+        ]);
+
+
+
+
+
+        if ($new_category){
+            return response()->json([
+                'success' => 1,
+                'msg' => 'saved successful',
+            ]);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Category $category)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Category $category)
     {
-        //
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
+
+
+    public function update(Request $request)
     {
-        //
+
+
+        $rules = [
+            'name' => 'required',
+            'description' =>  'required'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => 0,
+                'errors' => $validator->getMessageBag()->toArray()
+
+            ]);
+        }
+
+
+
+  $updated_category = Category::where('id', $request->id)
+        ->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'parent_id' => $request->has('parent_id') ? $request->parent_id : null,
+        ]);
+
+
+
+
+
+        if ($updated_category){
+            return response()->json([
+                'success' => 1,
+                'msg' => 'saved successful',
+            ]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Category $category)
     {
-        //
+
     }
 }

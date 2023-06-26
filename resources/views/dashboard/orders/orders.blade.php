@@ -107,9 +107,10 @@
                   <th>
                   </th>
                   <th>ID</th>
-                 
+                  <th>customer name</th>
                   <th>Status</th>
                   <th>Quantity</th>
+                  <th>products number</th>
                   <th>Total</th>
                   <th>Action</th>
                </tr>

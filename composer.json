@@ -10,8 +10,14 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+<<<<<<< HEAD
         "maatwebsite/excel": "^3.1",
         "php-open-source-saver/jwt-auth": "^2.1"
+=======
+        "laravelcollective/html": "^6.4",
+        "php-open-source-saver/jwt-auth": "^2.1",
+        "spatie/laravel-permission": "^5.10"
+>>>>>>> b050213b8bc27ea523c00b4d579d7ece18e199eb
     },
     "require-dev": {
         "fakerphp/faker": "^1.21",
@@ -56,6 +62,7 @@
         }
     },
     "config": {
+        "secure-http": true,
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,

@@ -1,79 +1,109 @@
 <?php
 
-use App\Http\Controllers\Auth\company\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\company\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\company\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\company\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\company\NewPasswordController;
-use App\Http\Controllers\Auth\company\PasswordController;
-use App\Http\Controllers\Auth\company\PasswordResetLinkController;
-use App\Http\Controllers\Auth\company\RegisteredUserController;
-use App\Http\Controllers\Auth\company\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('company.register');
-
-    Route::post('register', [RegisteredUserController::class, 'store']);
-
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-                ->name('company.login');
-
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
-
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
-                ->name('company.password.request');
-
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
-                ->name('company.password.email');
-
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-                ->name('company.password.reset');
-
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
-                ->name('company.password.store');
-});
-
-Route::middleware('auth.company')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)
-                ->name('company.verification.notice');
-
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-                ->middleware(['signed', 'throttle:6,1'])
-                ->name('company.verification.verify');
-
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-                ->middleware('throttle:6,1')
-                ->name('company.verification.send');
-
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-                ->name('company.password.confirm');
-
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
-
-    Route::put('password', [PasswordController::class, 'update'])->name('company.password.update');
-
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->name('company.logout');
-});
+use Illuminate\Http\Request;
 
 
 
+Route::prefix('company')
+    ->name('company.')
+    ->group(function () {
+        Route::middleware('isCompany')->group(function () {
+
+            Route::get('/', function () {
+                return view('company.index');
+            });
+
+            Route::get('/index', function () {
+                return view('company.index');
+            })->name('index');
+
+            Route::get('/companies', function () {
+                return view('company.companies.companies');
+            })->name('companies');
+
+
+            Route::get('/products', function () {
+                return view('company.products.products');
+            })->name('products');
+
+            Route::get('/products/add', [ProductController::class,'companyAddProductPage'])->name('products.add');
+
+
+            Route::get('/categories/add', [CategoryController::class,'companyAddCategoryPage'])->name('categories.add');
+
+            // Route::get('/advertisement/add', [AdvertisementController::class,'addAdvertisementPage'])->name('advertisement.add');
+
+
+            Route::post('/products/store', [ProductController::class,'store'])->name('products.store');
+            // Route::post('/customers/store', [CustomerController::class,'store'])->name('customers.store');
+            // Route::post('/orders/store', [OrderController::class,'store'])->name('orders.store');
+            Route::post('/categories/store', [CategoryController::class,'store'])->name('categories.store');
+            // Route::post('/companies/store', [CompanyController::class,'store'])->name('companies.store');
+            // Route::post('/advertisement/store', [AdvertisementController::class,'store'])->name('companies.store');
+
+
+
+
+
+
+
+
+
+
+
+            Route::get('/products/edit/{id}', [ProductController::class,'companyEditProductPage'])->name('products.edit');
+            // Route::get('/customers/edit/{id}', [CustomerController::class,'editCustomerPage'])->name('customers.edit');
+            // Route::get('/orders/edit/{id}', [OrderController::class,'editOrderPage'])->name('orders.add');
+            Route::get('/categories/edit/{id}', [CategoryController::class,'companyEditCategoryPage'])->name('categories.edit');
+            Route::get('/companies/edit/{id}', [CompanyController::class,'editCompanyPage'])->name('companies.edit');
+
+
+            // Route::get('/advertisement/edit/{id}', [CompanyController::class,'editAdvertisementPage'])->name('advertisement.edit');
+
+
+
+
+
+
+                // Route::get('/customers', function () {
+                // return view('dashboard.customers.customers');
+                // })->name('customers');
+
+
+
+            // Route::get('/advertisement', function () {
+            //     return view('dashboard.advertisement.advertisement');
+            // })->name('advertisement');
+
+
+
+            Route::get('/orders', function () {
+                return view('company.orders.orders');
+            })->name('orders');
+
+            Route::get('/categories', function () {
+                return view('company.categories.categories');
+            })->name('categories');
+
+
+            // Route::get('/users', function () {
+            //     return view('dashboard.users.index');
+            // })->name('users');
+
+            // Route::get('/roles', function () {
+            //     return view('dashboard.roles.index');
+            // })->name('roles');
+        });
+
+
+
+
+        require __DIR__ . '/company_auth.php';
+    });
