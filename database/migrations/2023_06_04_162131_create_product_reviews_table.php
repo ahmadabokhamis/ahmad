@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->integer('rating');
-            $table->text('review');
+            $table->integer('overall_rating');
+            $table->text('review')->nullable();
             $table->timestamps();
         });
     }
